@@ -10,11 +10,12 @@ import {
   ErrorMessage,
   FormButton,
 } from './ContactForm.styled';
-import { addContact } from '../../redux/contactsSlice';
+import { addContact } from '../../redux/operations';
+import { selectContacts } from '../../redux/selectors';
 
 const formSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Too Short!').required('Required'),
-  number: Yup.string()
+  phone: Yup.string()
     .matches(
       /^(\d{2,}-\d{2,}-\d{2,}|\d{2,}-\d{2,}|\d{5,})$/,
       'Phone number is not valid. Min 7 numbers (101-01-01)'
@@ -24,16 +25,17 @@ const formSchema = Yup.object().shape({
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(selectContacts);
 
   return (
     <FormContainer>
       <Formik
-        initialValues={{ name: '', number: '' }}
+        initialValues={{ name: '', phone: '' }}
         validationSchema={formSchema}
         onSubmit={(values, actions) => {
+          console.log(values);
           if (
-            contacts.some(
+            contacts.find(
               contact =>
                 contact.name.toLocaleLowerCase() ===
                 values.name.toLocaleLowerCase()
@@ -54,8 +56,8 @@ export const ContactForm = () => {
 
           <FormGroup>
             Number
-            <Field type="tel" name="number" />
-            <ErrorMessage name="number" component="span" />
+            <Field type="tel" name="phone" />
+            <ErrorMessage name="phone" component="span" />
           </FormGroup>
 
           <FormButton type="submit">Add contact</FormButton>
