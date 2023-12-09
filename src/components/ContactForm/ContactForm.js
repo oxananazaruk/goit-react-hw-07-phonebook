@@ -33,7 +33,6 @@ export const ContactForm = () => {
         initialValues={{ name: '', phone: '' }}
         validationSchema={formSchema}
         onSubmit={(values, actions) => {
-          console.log(values);
           if (
             contacts.find(
               contact =>

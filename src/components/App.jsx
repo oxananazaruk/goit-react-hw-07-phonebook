@@ -6,15 +6,18 @@ import { Filter } from './Filter/Filter';
 import { Title } from './App.styled';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsLoading, selectError } from '../redux/selectors';
-import {fetchContacts} from '../redux/operations'
+import { selectIsLoading, selectError, selectContacts } from '../redux/selectors';
+import { fetchContacts } from '../redux/operations'
+
 
 
 
 export const App = () => {
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
+  const contacts = useSelector(selectContacts);
+
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -28,7 +31,7 @@ export const App = () => {
       <Filter />
       {isLoading && !error && <b>Request in progress...</b>}
       {error && <b>Somesing went wrong! Please, try reload this page.</b>}
-      <Contacts  />
+      {contacts.length>0 ? <Contacts  /> : <b>There are no contacts at your list</b>}
       <GlobalStyle />
       <Toaster />
     </div>
