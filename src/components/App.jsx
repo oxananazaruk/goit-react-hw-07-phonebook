@@ -31,7 +31,7 @@ export const App = () => {
       <Filter />
       {isLoading && !error && <b>Request in progress...</b>}
       {error && <b>Somesing went wrong! Please, try reload this page.</b>}
-      {contacts.length>0 ? <Contacts  /> : <b>There are no contacts at your list</b>}
+      {contacts.length>0 && <Contacts  />}
       <GlobalStyle />
       <Toaster />
     </div>
